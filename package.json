@@ -1,0 +1,35 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "Devroll blog",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build && next export -o dist",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raulGX/blog.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "raul",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raulGX/blog/issues"
+  },
+  "homepage": "https://github.com/raulGX/blog#readme",
+  "dependencies": {
+    "gray-matter": "^4.0.2",
+    "js-yaml": "^3.13.1",
+    "marked": "^0.8.2",
+    "next": "^9.4.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "raw-loader": "^4.0.1"
+  }
+}

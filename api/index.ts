@@ -1,11 +1,12 @@
 import matter from "gray-matter";
 import marked from "marked";
-import yaml from "js-yaml";
 
 export async function getAllPosts() {
+  // @ts-ignore
   const context = require.context("../_posts", false, /\.md$/);
   const posts = [];
-  for (const key of context.keys()) {
+  let keys = context.keys().filter((s: string) => s.startsWith("./"));
+  for (const key of keys) {
     const post = key.slice(2);
     const content = await import(`../_posts/${post}`);
     const meta = matter(content.default);
@@ -25,9 +26,4 @@ export async function getPostBySlug(slug: string) {
     title: meta.data.title,
     content: content,
   };
-}
-
-export async function getConfig() {
-  const config = await import(`../config.yml`);
-  return yaml.safeLoad(config.default);
 }

@@ -1,29 +1,50 @@
+import fs from "fs";
+import { join } from "path";
 import matter from "gray-matter";
 import marked from "marked";
 
-export async function getAllPosts() {
-  // @ts-ignore
-  const context = require.context("../_posts", false, /\.md$/);
-  const posts = [];
-  let keys = context.keys().filter((s: string) => s.startsWith("./"));
-  for (const key of keys) {
-    const post = key.slice(2);
-    const content = await import(`../_posts/${post}`);
-    const meta = matter(content.default);
-    posts.push({
-      slug: post.replace(".md", ""),
-      title: meta.data.title,
-    });
-  }
+export interface Post {
+  slug: string;
+  title: string;
+  content: string;
+  coverImage: string;
+  date: string;
+  author: string;
+}
+
+const postsDirectory = join(process.cwd(), "_posts");
+
+export async function getPostSlugs(): Promise<string[]> {
+  let posts = fs.readdirSync(postsDirectory);
   return posts;
 }
 
-export async function getPostBySlug(slug: string) {
-  const fileContent = await import(`../_posts/${slug}.md`);
-  const meta = matter(fileContent.default);
-  const content = marked(meta.content);
-  return {
-    title: meta.data.title,
-    content: content,
+export async function getPostBySlug(slug: string): Promise<Post> {
+  const realSlug = slug.replace(/\.md$/, "");
+  const fullPath = join(postsDirectory, `${realSlug}.md`);
+  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const { data, content } = matter(fileContents);
+  let post: Post = {
+    slug: "",
+    title: "",
+    author: "",
+    content: "",
+    coverImage: "",
+    date: "",
   };
+
+  Object.keys(post).forEach((field: string) => {
+    if (field === "slug") {
+      post[field] = realSlug;
+    }
+    if (field === "content") {
+      post[field] = content;
+    }
+
+    if (data[field]) {
+      (post as any)[field] = data[field];
+    }
+  });
+
+  return post;
 }

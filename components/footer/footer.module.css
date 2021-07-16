@@ -6,3 +6,9 @@
 
   background-color: var(--footer-backgroud);
 }
+
+.wrapper {
+  width: 100%;
+  margin: auto;
+  max-width: var(--max-width);
+}

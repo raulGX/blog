@@ -17,6 +17,8 @@ body,
   --gray4: #454e56;
   --gray5: #2a2e35;
   --gray6: #12181b;
+
+  --max-width: 1024px;
 }
 
 .light-theme {

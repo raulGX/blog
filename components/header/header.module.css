@@ -2,8 +2,15 @@
   width: 100%;
   padding: 1rem;
   display: flex;
-  flex-wrap: wrap;
   box-shadow: 0 0 0 1px var(--nav-shadow), 0 5px 15px -5px rgb(0 0 0 / 10%);
+}
+
+.wrapper {
+  width: 100%;
+  margin: auto;
+  max-width: var(--max-width);
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .branding {

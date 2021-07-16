@@ -1,0 +1,8 @@
+.footer {
+  width: 100%;
+  padding: 1rem;
+  justify-self: flex-end;
+  align-self: flex-end;
+
+  background-color: var(--footer-backgroud);
+}

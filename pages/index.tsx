@@ -10,7 +10,6 @@ type Props = {
 };
 
 const Index = ({ allPosts }: Props) => {
-  console.log(allPosts);
   return (
     <Layout>
       <Head>

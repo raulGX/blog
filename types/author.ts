@@ -1,6 +1,13 @@
 type Author = {
-  name: string
-  picture: string
-}
+  name: string;
+  picture: string;
+};
 
-export default Author
+export const authors: Record<string, Author> = {
+  raul: {
+    name: "Raul Popovici",
+    picture: "",
+  },
+};
+
+export default Author;

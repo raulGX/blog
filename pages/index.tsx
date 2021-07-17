@@ -1,21 +1,23 @@
 import { Layout } from "../components/layout/layout";
+import { PostSummary } from "../components/post";
 import { getAllPosts } from "../lib/api";
 import Head from "next/head";
-import Post from "../types/post";
+import { IPost } from "../types/post";
 import { BRAND_NAME } from "../lib/constants";
 
 type Props = {
-  allPosts: Post[];
+  allPosts: IPost[];
 };
 
 const Index = ({ allPosts }: Props) => {
+  console.log(allPosts);
   return (
     <Layout>
       <Head>
         <title>{BRAND_NAME} - All posts</title>
       </Head>
       {allPosts.map((p) => {
-        return <p key={p.slug}>{p.slug}</p>;
+        return <PostSummary key={p.slug} post={p}></PostSummary>;
       })}
     </Layout>
   );
@@ -24,14 +26,7 @@ const Index = ({ allPosts }: Props) => {
 export default Index;
 
 export const getStaticProps = async () => {
-  const allPosts = getAllPosts([
-    "title",
-    "date",
-    "slug",
-    "author",
-    "coverImage",
-    "excerpt",
-  ]);
+  const allPosts = getAllPosts();
 
   return {
     props: { allPosts },

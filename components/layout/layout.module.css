@@ -11,4 +11,5 @@
   max-width: var(--max-width);
   flex: 1;
   padding: 1rem;
+  background-color: var(--layout-bg);
 }

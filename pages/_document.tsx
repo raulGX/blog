@@ -1,4 +1,6 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import React from "react";
+import Document, { Html, Head, Main, NextScript } from "next/document";
+import { ThemeProvider } from "../components/theme/themeContext";
 
 export default class MyDocument extends Document {
   render() {
@@ -10,6 +12,6 @@ export default class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }

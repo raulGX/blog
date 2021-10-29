@@ -17,6 +17,10 @@
   flex: 1 0 200px;
 }
 
+.brandingLogo {
+  height: 30px;
+}
+
 .navbar {
   margin: 1rem auto;
   flex: 0 0 250px;

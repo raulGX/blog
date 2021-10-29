@@ -14,9 +14,11 @@ type Props = {
 
 const Post = ({ post, preview }: Props) => {
   const router = useRouter();
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
+
   return (
     <Layout preview={preview}>
       <Head>

@@ -1,19 +1,35 @@
 import Link from "next/link";
+import Image from "next/image";
+import { useContext } from "react";
+
+import { Theme, ThemeContext } from "../theme/themeContext";
+
 import styles from "./header.module.css";
+
 export const Header = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   return (
     <header className={styles.header}>
       <div className={styles.wrapper}>
         <div className={styles.branding}>
           <Link href="/">
-            <a>Devroll</a>
+            <img
+              className={styles.brandingLogo}
+              src={`images/logo-${theme}.png`}
+            />
           </Link>
           <p>A blog about building reliable software.</p>
         </div>
         <nav className={styles.navbar}>
-          <Link href="/">All posts</Link>
-          <Link href="/">Search</Link>
-          <Link href="/">About</Link>
+          <Link href="/">home</Link>
+          <Link href="/contact">contact</Link>
+          <span>| </span>
+
+          <div>
+            <span onClick={toggleTheme}>
+              {theme === Theme.light ? "D" : "L"}
+            </span>
+          </div>
         </nav>
       </div>
     </header>

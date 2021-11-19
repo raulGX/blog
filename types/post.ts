@@ -8,4 +8,5 @@ export type IPost = {
   author: Author;
   excerpt: string;
   content: string;
+  tags: string[];
 };

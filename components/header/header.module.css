@@ -14,7 +14,7 @@
 }
 
 .branding {
-  flex: 1 0 200px;
+  width: 160px;
 }
 
 .brandingLogo {
@@ -23,12 +23,18 @@
 
 .navbar {
   margin: 1rem auto;
-  flex: 0 0 250px;
+  flex: 1 0 100px;
   display: flex;
-  justify-content: center;
+  justify-content: right;
+}
+
+.navbar .activeRoute {
+  border-bottom: 2px solid var(--highlight);
 }
 
 .navbar a {
   margin: 0 5px;
   text-align: center;
+  color: var(--text-color);
+  text-decoration: none;
 }

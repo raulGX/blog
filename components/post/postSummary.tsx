@@ -7,7 +7,8 @@ import styles from "./postSummary.module.css";
 
 export const PostSummary = (props: { post: IPost }) => {
   const { post } = props;
-  const { date, author, slug } = post;
+  const { date, author, slug, tags } = post;
+  console.log(tags);
   return (
     <article className={styles.wrapper}>
       <h1 className={styles.title}>{post.title}</h1>

@@ -1,13 +1,31 @@
 import Link from "next/link";
-import Image from "next/image";
-import { useContext } from "react";
+import { useRouter } from "next/router";
+import { useContext, useMemo } from "react";
 
-import { Theme, ThemeContext } from "../theme/themeContext";
+import { ThemeContext } from "../theme/themeContext";
 
 import styles from "./header.module.css";
 
+let _routes: {
+  route: string;
+  displayName: string;
+  active: boolean;
+}[] = [
+  { route: "/", displayName: "home", active: false },
+  { route: "/contact", displayName: "contact", active: false },
+];
+
 export const Header = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
+  const { route } = useRouter();
+
+  const routes = useMemo(() => {
+    return _routes.map((r) => ({
+      ...r,
+      active: r.route === route,
+    }));
+  }, [route]);
+
   return (
     <header className={styles.header}>
       <div className={styles.wrapper}>
@@ -15,21 +33,18 @@ export const Header = () => {
           <Link href="/">
             <img
               className={styles.brandingLogo}
-              src={`images/logo-${theme}.png`}
+              src={`/images/logo-${theme}.png`}
             />
           </Link>
-          <p>A blog about building reliable software.</p>
         </div>
         <nav className={styles.navbar}>
-          <Link href="/">home</Link>
-          <Link href="/contact">contact</Link>
-          <span>| </span>
-
-          <div>
-            <span onClick={toggleTheme}>
-              {theme === Theme.light ? "D" : "L"}
-            </span>
-          </div>
+          {routes.map((r) => (
+            <Link key={r.displayName} href={r.route}>
+              <a className={`${r.active === true ? styles.activeRoute : ""}`}>
+                {r.displayName}
+              </a>
+            </Link>
+          ))}
         </nav>
       </div>
     </header>

@@ -23,6 +23,7 @@ export function getPostBySlug(slug: string): IPost {
     excerpt: data.excerpt,
     slug: realSlug,
     title: data.title,
+    tags: data.tags,
   };
 }
 

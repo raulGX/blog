@@ -9,10 +9,9 @@ import { BRAND_NAME } from "../../lib/constants";
 
 type Props = {
   post: IPost;
-  preview?: boolean;
 };
 
-const Post = ({ post, preview }: Props) => {
+const Post = ({ post }: Props) => {
   const router = useRouter();
 
   if (!router.isFallback && !post?.slug) {
@@ -20,7 +19,7 @@ const Post = ({ post, preview }: Props) => {
   }
 
   return (
-    <Layout preview={preview}>
+    <Layout>
       <Head>
         <title>
           {BRAND_NAME} - {post.title}

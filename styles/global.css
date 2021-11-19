@@ -15,6 +15,10 @@ body,
 
 .light-theme {
   --layout-bg: #fafafa;
+  --text-color: #1f2326;
+  --highlight: #47b5ac;
+
+  background-color: var(--layout-bg);
 }
 
 .dark-theme {

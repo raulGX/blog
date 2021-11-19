@@ -1,8 +1,14 @@
 .titleBox {
   display: inline-grid;
-  grid-template-columns: auto auto;
-  grid-template-rows: auto auto;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
   column-gap: 10px;
+  row-gap: 10px;
+}
+
+.date {
+  display: flex;
+  grid-row-start: span 2;
 }
 
 .title {
@@ -18,13 +24,6 @@
   gap: 10px;
 }
 
-.date {
-  display: flex;
-  /* align-items: center;
-  justify-content: center; */
-  grid-row-start: span 2;
-}
-
 .wrapper {
   margin-bottom: 60px;
 }
@@ -35,7 +34,18 @@
   padding: 10px 20px;
   background-color: var(--highlight);
 }
+
 .postCTA a {
   color: var(--highlight-text);
   text-decoration: none;
+}
+
+@media screen and (max-width: 480px) {
+  .title {
+    grid-column: span 2;
+  }
+
+  .tags {
+    align-items: center;
+  }
 }

@@ -16,16 +16,21 @@ export const PostSummary = (props: { post: IPost }) => {
         <div className={styles.date}>
           <DateDisplay dateString={date} />
         </div>
+
         <h1 className={styles.title}>{post.title}</h1>
+
         <div className={styles.tags}>
           {tags.map((t) => (
             <Tag key={t} tag={t} />
           ))}
         </div>
       </div>
+
       <section className={styles.postMeta}></section>
+
       <section className={styles.postMeta}>
         <p>{post.excerpt}</p>
+
         <div className={styles.postCTA}>
           <Link href={`/posts/${slug}`}>read more</Link>
         </div>

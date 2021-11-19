@@ -11,12 +11,17 @@ body,
 
 :root {
   --max-width: 1024px;
+  --display-box-size: 60px;
+  --highlight: #47b5ac;
+  --highlight-secondary: #bc4ca0;
+  --highlight-text: #ffffff;
 }
 
 .light-theme {
   --layout-bg: #fafafa;
   --text-color: #1f2326;
-  --highlight: #47b5ac;
+  --box-bg: #ffffff;
+  --box-border: #e6e6e6;
 
   background-color: var(--layout-bg);
 }

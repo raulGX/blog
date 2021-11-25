@@ -1,0 +1,31 @@
+html,
+body,
+#__next {
+  height: 100%;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --max-width: 1024px;
+  --display-box-size: 60px;
+  --highlight: #47b5ac;
+  --highlight-secondary: #bc4ca0;
+  --highlight-text: #ffffff;
+}
+
+.light-theme {
+  --layout-bg: #fafafa;
+  --text-color: #1f2326;
+  --box-bg: #ffffff;
+  --box-border: #e6e6e6;
+
+  background-color: var(--layout-bg);
+}
+
+.dark-theme {
+  --layout-bg: #1f1f1f;
+}

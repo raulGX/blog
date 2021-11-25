@@ -1,0 +1,51 @@
+.titleBox {
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
+.date {
+  display: flex;
+  grid-row-start: span 2;
+}
+
+.title {
+  grid-row-start: 1;
+  grid-column-start: 2;
+  grid-row-end: auto;
+  margin: 0;
+  display: block;
+}
+
+.tags {
+  display: flex;
+  gap: 10px;
+}
+
+.wrapper {
+  margin-bottom: 60px;
+}
+
+.postCTA {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 10px 20px;
+  background-color: var(--highlight);
+}
+
+.postCTA a {
+  color: var(--highlight-text);
+  text-decoration: none;
+}
+
+@media screen and (max-width: 480px) {
+  .title {
+    grid-column: span 2;
+  }
+
+  .tags {
+    align-items: center;
+  }
+}

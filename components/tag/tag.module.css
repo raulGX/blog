@@ -1,0 +1,9 @@
+.tag {
+  display: inline-block;
+  max-height: 30px;
+  line-height: 20px;
+  border-radius: 20px;
+  padding: 3px 20px;
+  background-color: var(--highlight-secondary);
+  color: var(--highlight-text);
+}

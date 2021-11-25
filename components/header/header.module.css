@@ -1,0 +1,40 @@
+.header {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  box-shadow: 0 0 0 1px var(--nav-shadow), 0 5px 15px -5px rgb(0 0 0 / 10%);
+}
+
+.wrapper {
+  width: 100%;
+  margin: auto;
+  max-width: var(--max-width);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.branding {
+  width: 160px;
+}
+
+.brandingLogo {
+  height: 30px;
+}
+
+.navbar {
+  margin: 1rem auto;
+  flex: 1 0 100px;
+  display: flex;
+  justify-content: right;
+}
+
+.navbar .activeRoute {
+  border-bottom: 2px solid var(--highlight);
+}
+
+.navbar a {
+  margin: 0 5px;
+  text-align: center;
+  color: var(--text-color);
+  text-decoration: none;
+}

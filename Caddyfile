@@ -1,0 +1,15 @@
+# This is the domain we are using. Your domain will be different, or
+# it might just be a port. You can also use the server's IP address
+# and https should work with that.
+devroll.io
+# This enables gzip compression.
+encode gzip
+root * /usr/share/caddy
+file_server
+# Allow accessing files without requiring .html:
+try_files {path} {path}.html
+
+handle_errors {
+  rewrite * /404.html
+  file_server
+}

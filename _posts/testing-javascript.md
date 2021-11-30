@@ -7,6 +7,8 @@ tags: ["tests", "javascript", "web"]
 author: raul
 ---
 
+# How do I test my code?
+
 Writing tests can be a difficult process. From my experience, the interaction between developers and tests is not what could and should be. Some people view tests as a chore, something to do after you finished your implementation. This is a wrong behaviour as it can cause tests to be left out. Coding new features can often be a long and painfull process. You might not have willpower left to write tests. You are frustrated because that javascript library you just added to the project is not working as you expected to. Who is going to write more code to prove the last 2 hours you spent have produced perfect and bug free features? You'll just play around with postman or just use the part of the application you just modified and grab a cookie for a job well done.
 
 Tests are best written while you develop your features. This can have amazing benefits! Write a test, make your code pass it, write another one and so on. I think one of the most undervalued skills as a developer is to work in small and incremental steps. You should try to have your code functional as often as you can. Having to test your code will make you refactor it in order to be more usable. Sometimes the feature you are developing is very difficult to reach or you have to do a lot of manual steps to prepare the system in order to see if what you are doing actually works. Tests don't have this problem, once you wrote the setup for the test, it's there to be used for every test you write.

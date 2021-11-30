@@ -5,7 +5,7 @@ import { ThemeProvider } from "../components/theme/themeContext";
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html className="antialiased" lang="en">
         <Head />
         <body>
           <Main />

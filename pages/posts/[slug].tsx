@@ -27,13 +27,10 @@ const Post = ({ post }: Props) => {
         </title>
       </Head>
       {router.isFallback ? null : (
-        <>
-          <h1>{post.title}</h1>
-          <article
-            className="mb-32"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          ></article>
-        </>
+        <article
+          className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-xl 2xl:prose-2xl mx-auto"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        ></article>
       )}
     </Layout>
   );

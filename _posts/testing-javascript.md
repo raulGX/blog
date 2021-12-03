@@ -17,8 +17,43 @@ Depending on how many parts you are testing, tests have different names. I think
 
 Let's see an example.
 
-## A book API
+## TDD example
 
-We are working on an book tracking app. We should be able to add books and search for them. The name of the book and the author should be enough for now, we can add the rest of the fields later.
+You are working on a employee time tracking app. You are a subject for burnout working on such a thing, but you take pride in your work. You are going to develop it using TDD. First of all let's see what is asked of you.
 
-We'll use a REST web service. There should be 2 routes in our service, one for adding books and one for searching them. Let's start with adding books. The function will receive an object and save it to a database. We should separate the parsing of the request body from the logic of our function. Why? I think it's a good practice to separate infrastructer from the domain logic of your application. In our case, communication is done through http and in the JSON format. We might want to expose a graphql api or a GRPC with protocol buffers. The logic of adding books will not change. The only thing that changes is the way we receive and parse the request.
+> We need to create departments. A department can be on the top level or can be part of another department. We need to search for departments based on hierarchies. Ex: we have to see all the departments that are children or inside the hierarchy of the finance department.
+
+We'll start with making an express server. There may be other better libraries that make working with http easier, but express is very easy to read.
+
+```ts
+import express from "express";
+
+export function makeServer(port: number = 3000) {
+  const app = express();
+
+  app.set("port", process.env.PORT);
+  app.get("/", (_, res) => {
+    res.json({ ok: true });
+  });
+
+  return app;
+}
+```
+
+It looks like a basic example (sans hello world). Let's see the test.
+
+```ts
+import request from "supertest";
+import { makeServer } from "./app";
+
+describe("GET /", () => {
+  it("should return 200 OK", async (done) => {
+    const app = makeServer(0); // assign a free port
+
+    let res = await request(app).get("/");
+    expect(res.body).toEqual({ ok: true });
+
+    done();
+  });
+});
+```

@@ -31,7 +31,7 @@ import express from "express";
 export function makeServer(port: number = 3000) {
   const app = express();
 
-  app.set("port", process.env.PORT);
+  app.set("port", port);
   app.get("/", (_, res) => {
     res.json({ ok: true });
   });
@@ -55,5 +55,156 @@ describe("GET /", () => {
 
     done();
   });
+});
+```
+
+Make sure the test library you are using has a watch feature. Also make sure it has a cool looking console view with instant feedback, red/green colors, etc. We wanna make sure we feed our dopamine receptors with all the juice we can.
+
+### Starting the rest api
+
+We need a create and list endpoint. They should look like this:
+
+- GET `/departments` - returns a list of departments
+- POST `/departments` - creates a department
+
+First, the test:
+
+```ts
+it("creates departments and checks if they exist", async (done) => {
+  const app = makeServer(0);
+
+  const departments = [{ name: "marketing" }, { name: "financial" }];
+
+  for (const department of departments) {
+    await request(app).post("/departments").send(department).expect(200);
+  }
+
+  await request(app).get("/departments").expect(200, departments);
+  done();
+});
+```
+
+Now we have a failing test that we need to fix. To parse the json in the request body so we use the handy `body-parser` library. To fix the failing test, we conjure some obscure and naive solution.
+
+```ts
+interface Department {
+  name: string;
+}
+
+app.use(bodyParser.json());
+
+const departments: Department[] = [];
+
+app.get("/departments", (_, res) => {
+  res.json(departments);
+});
+
+app.post("/departments", async (req, res) => {
+  const department: Department = req.body;
+  // do some validation
+  departments.push(department);
+  res.send();
+});
+```
+
+At some point we'll use a database for persisting the data, but we don't really want to do that for now. Setting up the database is a boring task, we wanna continue with the red green stuff.
+Let's wrap the adding and listing inside an injectable object that can be replaced later.
+
+```ts
+interface DepartmentRepo {
+  list(): Department[];
+  add(dep: Department): unknown;
+}
+
+export function makeDepartmentRepo(): DepartmentRepo {
+  const departmets: Department[] = [];
+  return {
+    add(department: Department) {
+      departmets.push(department);
+    },
+    list() {
+      return departmets;
+    },
+  };
+}
+
+export function makeServer(
+  port: number = 3000,
+  departmentRepo: DepartmentRepo
+) {
+  const app = express();
+
+  app.set("port", port);
+  app.use(bodyParser.json());
+
+  app.get("/departments", (_, res) => {
+    res.json(departmentRepo.list());
+  });
+
+  app.post("/departments", async (req, res) => {
+    const department: Department = req.body;
+    // do some validation
+    departmentRepo.add(department);
+    res.send();
+  });
+
+  return app;
+}
+```
+
+To fix the test: `const app = makeServer(0, makeDepartmentRepo());`. You should always test that your code returns errors. We'll do that next. The add method of our repository has the following signature `add(dep: Department): unknown;`. There shouldn't be 2 departments with the same name, let's write a test to make sure!
+
+```ts
+it("creates 2 departments with the same name and expects an error", async (done) => {
+  const app = makeServer(0, makeDepartmentRepo());
+  const department = { name: "technology" };
+
+  await request(app).post("/departments").send(department).expect(200);
+  await request(app).post("/departments").send(department).expect(400);
+
+  // also make sure we don't actually save the department, despite the error.
+  await request(app).get("/departments").expect(200, [department]);
+  done();
+});
+```
+
+I don't particularily enjoy exceptions as a way of treating errors so let's see a different approach.
+
+```ts
+interface DepartmentRepo {
+  list(): Department[];
+  add(dep: Department): [dep: Department, err: Error | null];
+}
+```
+
+This way of error treatment is inspired from golang. I'm 100% sure if you are not familiar with go, you will not like how this looks, but bear with me.
+
+```ts
+export const duplicateDepartmentError = new Error("Deparment already exists");
+
+// the repo method
+add(department: Department) {
+  if (departmets.some((d) => d.name === department.name)) {
+    return [null, duplicateDepartmentError];
+  }
+  departmets.push(department);
+  return [department, null];
+}
+// ...
+app.post("/departments", async (req, res) => {
+  const department: Department = req.body;
+  // do some validation
+  const [dep, err] = departmentRepo.add(department);
+
+  if (err != null) {
+    if (err === duplicateDepartmentError) {
+      res.status(400).send({ error: duplicateDepartmentError.message });
+    } else {
+      res.status(500);
+    }
+    return;
+  }
+
+  res.send(dep);
 });
 ```

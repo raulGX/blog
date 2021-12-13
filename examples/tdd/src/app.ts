@@ -1,32 +1,10 @@
 import express from "express";
 import bodyParser from "body-parser";
-
-interface Department {
-  name: string;
-}
-
-interface DepartmentRepo {
-  list(): Department[];
-  add(dep: Department): [dep: Department, err: Error | null];
-}
-
-export const duplicateDepartmentError = new Error("Deparment already exists");
-
-export function makeDepartmentRepo(): DepartmentRepo {
-  const departmets: Department[] = [];
-  return {
-    add(department: Department) {
-      if (departmets.some((d) => d.name === department.name)) {
-        return [null, duplicateDepartmentError];
-      }
-      departmets.push(department);
-      return [department, null];
-    },
-    list() {
-      return departmets;
-    },
-  };
-}
+import {
+  Department,
+  DepartmentRepo,
+  duplicateDepartmentError,
+} from "./departmentRepo";
 
 export function makeServer(
   port: number = 3000,

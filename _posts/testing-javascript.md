@@ -168,7 +168,7 @@ it("creates 2 departments with the same name and expects an error", async (done)
 });
 ```
 
-I don't particularily enjoy exceptions as a way of treating errors so let's see a different approach.
+I don't particularily enjoy exceptions as a way of treating errors, so let's see a different approach.
 
 ```ts
 interface DepartmentRepo {
@@ -180,7 +180,7 @@ interface DepartmentRepo {
 This way of error treatment is inspired from golang. I'm 100% sure if you are not familiar with go, you will not like how this looks, but bear with me.
 
 ```ts
-export const duplicateDepartmentError = new Error("Deparment already exists");
+export const duplicateDepartmentError = new Error("Department already exists");
 
 // the repo method
 add(department: Department) {
@@ -208,3 +208,85 @@ app.post("/departments", async (req, res) => {
   res.send(dep);
 });
 ```
+
+## Adding data persistence
+
+We played around enough, let's actually save the data. For that we'll use SQLite. Most of the applications we build these days don't require complex database systems like postgresql and the such. SQLite has it's downsides, but the ease of use and deployment is really worth it. I encourage you give it a try.
+
+We'll not use an ORM. Those things are traps, maybe I'll go into detail why I don't like ORMs in a later post. We'll just use a simple driver instead. `better-sqlite3` has a synchronous API. Yes, hearing that while writing javascript should make you uneasy. They promise `better concurrency than an asynchronous API... yes, you read that correctly`. That should be enough for our experiment. Concurrency will be a problem if we have a lot of users that use our app at the same time. At that point we should just ditch SQLite and embrace postgres.
+
+In order to interact with the database we have to develop a new implementation for the interface `DepartmentRepo`. At this point all of our tests will fail, but once we are done with our implementation they should pass again. To add and retreive data from sql we need a table. Those should be created by migrations. There are multiple ways of running migrations, but let's not worry about the best way for now. We'll just run them when we start the test server.
+
+The repo will end up looking like this.
+
+```ts
+export function makeDepartmentRepo(db: Database): DepartmentRepo {
+  const listStatement = db.prepare(`SELECT * FROM department`);
+  const getStatement = db.prepare(`SELECT * FROM department WHERE name = ?`);
+  const insertStatement = db.prepare(
+    `INSERT INTO department (name) VALUES (?)`
+  );
+  return {
+    add(department: Department) {
+      let existingDepartment: Department | undefined = getStatement.get(
+        department.name
+      );
+      if (existingDepartment) {
+        return [null, duplicateDepartmentError];
+      }
+      insertStatement.run(department.name);
+      return [department, null];
+    },
+    list() {
+      return listStatement.all();
+    },
+  };
+}
+
+export function makeDbConnection(fileName: string): Database {
+  return new DB(fileName, { fileMustExist: false, timeout: 2000 });
+}
+
+export function runMigrations(db: Database): void {
+  db.pragma("journal_mode = WAL");
+  db.exec(`CREATE TABLE IF NOT EXISTS department (name text);`);
+}
+```
+
+We'll add a test hook to build the environment:
+
+```ts
+let app: Express;
+
+beforeEach(() => {
+  // empty string makes a temp db
+  let dbConnection = makeDbConnection("");
+  runMigrations(dbConnection);
+  app = makeServer(0, makeDepartmentRepo(dbConnection));
+  app.on("close", () => {
+    dbConnection.close();
+  });
+});
+```
+
+We prepare the statements before actually using them. We do this for a couple of reasons:
+
+- if the statement is incorrect, the server will fail to start. We don't use an ORM, so we might have typos in our sql code.
+- we might generate the sql in the future. There is no need to manually type the sql when we can use the machines to do the work for us.
+
+Also, let's do some code review on the add method.
+
+```ts
+let existingDepartment: Department | undefined = getStatement.get(
+  department.name
+);
+if (existingDepartment) {
+  return [null, duplicateDepartmentError];
+}
+insertStatement.run(department.name);
+return [department, null];
+```
+
+If you would use a database other than SQLite (and the sync driver) the method would be error prone. If 2 requests with the same `primary key` are made at the same time, we would end up with 2 departments with the same name (there is no constraint on the table). Take a second to appreciate we don't have to burden of concurrency.
+
+I hope you enjoyed the walkthrough. In a following blog, we will describe what situations SQL is not the right tool and we'll embrace NoSql.

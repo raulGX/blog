@@ -1,10 +1,27 @@
+import { Express } from "express";
 import request from "supertest";
-import { makeDepartmentRepo, makeServer } from "./app";
+
+import { makeServer } from "./app";
+import {
+  makeDbConnection,
+  makeDepartmentRepo,
+  runMigrations,
+} from "./departmentRepo";
 
 describe("/departments", () => {
-  it("creates departments and checks if they exist", async (done) => {
-    const app = makeServer(0, makeDepartmentRepo());
+  let app: Express;
 
+  beforeEach(() => {
+    // empty string makes a temp db
+    let dbConnection = makeDbConnection("");
+    runMigrations(dbConnection);
+    app = makeServer(0, makeDepartmentRepo(dbConnection));
+    app.on("close", () => {
+      dbConnection.close();
+    });
+  });
+
+  it("creates departments and checks if they exist", async (done) => {
     const departments = [{ name: "marketing" }, { name: "financial" }];
 
     for (const department of departments) {
@@ -16,7 +33,6 @@ describe("/departments", () => {
   });
 
   it("creates 2 departments with the same name and expects an error", async (done) => {
-    const app = makeServer(0, makeDepartmentRepo());
     const department = { name: "technology" };
 
     await request(app).post("/departments").send(department).expect(200);

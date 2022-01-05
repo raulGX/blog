@@ -1,15 +1,15 @@
 ---
 title: "Conducting interviews as a software engineer"
 coverImage: ""
-excerpt: ""
+excerpt: "There is a lot of information out there on interviews. I would say most of it is information on how to be a good interviewee, not a good interviewer."
 date: "2020-12-18T13:53:07.322Z"
-tags: ["behaviour", "interview", "software", "javascript"]
+tags: ["behaviour", "interview", "software"]
 author: raul
 ---
 
 # Conducting interviews as a software engineer
 
-There is a lot of information out there on interviews. I would say most of it is information on how to be a good interviewee, not a good interviewer. I also think that the interview mini-game is not played right and riddled with wrong behaviours.
+There is a lot of information out there on interviews. I would say most of it is information on how to be a good interviewee, not a good interviewer. I also think that the interview mini-game is not played right and plagued with wrong behaviours.
 
 Conducting interviews is one of those skills that nobody is taught, you see how the people that interview you behave and you will copy them once you begin conducting interviews yourself. Speaking on my behalf, bad interviews are energy drains, no matter the which side of the table your chair is in. Let's see how we can improve this experience.
 
@@ -35,7 +35,7 @@ Respect their time! We live in a society where people pay with their time to get
 
 When you have a good sense about the interviewee, it's time to ask something technical. Avoid the pop quiz strategy of asking: what is _insert javascript technical term like closure, this, prototype_. People study those terms for interviews. Find real code examples and have the interviewee explain what is going on. Don't make them feel bad about not knowing or getting some things wrong. Explain the concept briefly and move on. If they have a bad time, don't be mean. Let them know everyone is not at 100% during interviews, as they might be difficult at times.
 
-## What to test for
+## What to ask
 
 Don't test like your highscool math teacher. This should feel like a discussion between colleagues, not that time your literature teacher quized you about some dull novel that you spaced out while trying to read. Have a bit of awareness on how the conversation is going. Acknoledge from time to time that interviewes are not quizes, but conversations. We are people, stress doesn't always bring up the best in us. If the person you are interviewing doesn't feel stressed, you will get the best impression on who they are.
 
@@ -61,6 +61,22 @@ My job is best done by a person exactly like me. It's too easy to think that, an
 
 Some people mask discrimination with not being a good fit or incompatible with the company culture. This has happened with a person I interviewed. I thought they would be a great team-mate. I gave in my good feedback, and was excited to hear if they accepted the position. Somewhere up the management chain, someone decided being of an older age would make them "not compatible with the company culture". Don't be like that, be as objective as possible.
 
-Interviewing is a skill. Be well prepared and considerate!
+Knowing what to ask is the easy part, you can prepare your questions before the interview depending on what seniority the interviewee is. You should have similar questions for every person. This makes it fair for everyone and it will make giving feedback easier, i.e. comparing people - ugh - easier.
 
-Bad questions, for the end, personal opinions
+## What to look for
+
+When I first started conducting interviews, I was co-chair to a more senior person. I didn't get to talk a lot, but that was okay. Instead, I paid attention to the other people speaking. Sometimes my co-chair was getting to much time to speak and I would try to move the microphone to the other person. Not concentrating on what to ask next allowed me to be more aware of what was being discussed. People have different personalities, if you co-chair with someone, make sure you work together.
+
+Now, the most difficult part of the interviewing process. \*_You need to ask questions, pay attention to the answers, and be aware of a few concepts_. It's easy to be lost in yourself, believe me. You can try to be cool and ask edgy questions, try to prove to the other person you are better, but that is not the point. You'll have plenty of time on the job to do that - just kidding, don't be an ass!
+
+_Keep track of intuition._ Solving a problem once will, hopefully, make you solve it easier the next time. Along our career we develop our intuition, it makes work easier. Sometimes you ask a question and you can see the interviewee's intuition kick in. You can feel they want to stop you from speaking, and answer the question. This can be a tell for someone's seniority. It goes well with the next concept to be aware of.
+
+_Keep track of the ability to track patterns._ Redux is just like the command pattern used in Microsoft Excel. You can see patterns everywhere. As a software engineer you have to be prepared to not repeat yourself. Patterns also make communication easier. You can only use this one object, you can't make more - Singleton. We need to send a message and some parts of the system have to subscribe to it - Observer/Pub-sub. You don't need to see how a row in a database is saved, just wrap it around an object - Facade/Adapter. You don't necessarily have to ask for the names of the patterns, just see if the person can see them.
+
+_Keep track of commitment._ This one is really hard. Can you tell if this person will do their job? You can test for IQ, and other meaningless stuff, but are they gonna use their skills to do the job or just slack off? That's kinda of a hot take, what do I mean by IQ is meaningless? You need a certain ability to be able to solve problems, but that doesn't mean that will keep you focused and direct you towards doing the job right!
+
+Some people say "you are in IT just for the money! You have to love it! It must a hobby! You HAVE to spend your off time learning new stuff!". I say get over yourself. A job is a job, don't be a romantic about it. Sometimes our job is our job, not our passion. That doesn't mean we don't do it well and don't find meaning in it. Usually a good tell is how a person responds to a problem. You don't necessarily wan't to look for excitement in solving the problem. They have to have a spark. Some people feel stressed during the interview, you have to see if they like solving the problem. This one can be on you! If you ask something too edgy, they might get put off, so try have something tailored to their persona. Design _this app that you use_. Let's make an app for _this hobby of yours_.
+
+Most important, _Can this person be your colleague?_. At the end of the day, an interview is a simulation of you working with another person. Does the job require a lot of teamwork or is more of a here's a task, see you when you are done-kind of situation. Can you steer the person away from a wrong path or do they ignore you completely? Do the ask questions when stuck or didn't understand?
+
+Interviewing is a skill. Be well prepared and considerate!

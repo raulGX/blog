@@ -1,1 +1,1 @@
-Welcome to my blog, [devroll.io] (www.devroll.io)
+Blog link: www.devroll.io

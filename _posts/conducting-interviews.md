@@ -3,7 +3,7 @@ title: "Conducting interviews as a software engineer"
 coverImage: ""
 excerpt: "There is a lot of information out there on interviews. I would say most of it is information on how to be a good interviewee, not a good interviewer."
 date: "2020-12-18T13:53:07.322Z"
-tags: ["behaviour", "interview", "software"]
+tags: ["behavior", "interview", "software"]
 author: raul
 ---
 
